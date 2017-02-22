@@ -3,9 +3,22 @@
 const meow = require('meow');
 const doNotDisturb = require('./');
 
-meow(`
-	Usage
-	  $ do-not-disturb
+const cli = meow(`
+  Usage
+    $ do-not-disturb <input>
+
+  Examples
+    $ do-not-disturb on
+
+    $ do-not-disturb off
 `);
 
-doNotDisturb.on();
+const state = cli.input[0]
+
+if (state === 'on') {
+  doNotDisturb.on();
+} else if (state === 'off') {
+  doNotDisturb.off()
+} else {
+  throw new Error(`Unrecognized input: ${cli.input}`)
+}
